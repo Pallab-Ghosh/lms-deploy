@@ -1,0 +1,23 @@
+
+ 
+import {create } from 'zustand'
+
+type ConfettiStore={
+    isOpen:boolean,
+    onOpen:()=>void
+    onClose:()=>void
+}
+
+export const useConfettiStore=create<ConfettiStore>((set)=>({
+    isOpen:false,
+    onOpen:()=>{
+        console.log('onopen trigger')
+        set({isOpen:true})
+    },
+    onClose:()=>{
+        console.log('onclose trigger')
+        set({isOpen:false})
+    }
+}))
+
+
