@@ -68,6 +68,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "prisma": "^5.7.1"
+    "prisma": "^5.7.1",
+    "eslint": "8.56.0"
   }
 }
