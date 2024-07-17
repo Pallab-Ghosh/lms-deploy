@@ -29,7 +29,7 @@ export const ChapterAction=({disabled,courseId,chapterId,isPublished, }:chaptera
    const onDelete= async()=>{
         try {
             setIsLoading(true);
-            axios.delete(`/api/course/${courseId}/chapters/${chapterId}`)
+            await axios.delete(`/api/course/${courseId}/chapters/${chapterId}`)
             toast.success('Chapter Deleted');
             
             router.push(`/teacher/courses/${courseId}`);
@@ -49,20 +49,24 @@ export const ChapterAction=({disabled,courseId,chapterId,isPublished, }:chaptera
                     
                     if(isPublished)
                     {
-                        axios.patch(`/api/course/${courseId}/chapters/${chapterId}/unpublish`)
+                        await axios.patch(`/api/course/${courseId}/chapters/${chapterId}/unpublish`)
                         toast.success('Chapter UnPublished');
+                     
                     }
 
                     else{
-                        axios.patch(`/api/course/${courseId}/chapters/${chapterId}/publish`)
+                        await axios.patch(`/api/course/${courseId}/chapters/${chapterId}/publish`)
                         toast.success('Chapter Published');
+                        
                     }
-            window.location.reload();
+                    router.refresh()
+           
         }
          catch (error) {
             toast.error('Something went wrong')
         }
         finally{
+            router.refresh()
             setIsLoading(false);
         }
    }
