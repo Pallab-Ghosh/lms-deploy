@@ -1,3 +1,4 @@
+
 import { IconBadge } from "@/components/icon-badge"
 import { db } from "@/lib/db"
 import { auth } from "@clerk/nextjs"
@@ -12,6 +13,7 @@ import PriceForm from "./_component/price_form"
 import AttachmentForm from "./_component/attachment-form"
 import ChapterForm from "./_component/chapters_form"
 import { CourseAction } from "./_component/course-action"
+import { useEffect, useState } from "react"
 
 type course_page_params={
     params:{
@@ -60,6 +62,8 @@ const Coursepage = async({params}:course_page_params) => {
  {
   return redirect('/')
  }
+
+
 
 const requiredFields=[course.title,course.description,course.imageUrl,course.price,course.categoryId,course.chapters.some((chapter)=>chapter.isPublished)];
 const totalFields=requiredFields.length;
@@ -123,6 +127,7 @@ const completionText=`(${completedField} / ${totalFields})`
                                Course Chapters
                              </h2>
                         </div>
+
                         <ChapterForm
                            initialData={course}
                            courseId={course.id}
@@ -146,6 +151,7 @@ const completionText=`(${completedField} / ${totalFields})`
                               Resources & Attachments
                              </h2>
                         </div>
+
                         <AttachmentForm 
                         initialData={course}
                          courseId={course.id}

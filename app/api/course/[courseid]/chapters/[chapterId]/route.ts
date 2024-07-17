@@ -89,6 +89,7 @@ export async function DELETE(req:Request,{params}:params_props)
             }
           })
       }
+      
      return NextResponse.json(deleted_chapter);
     } 
 

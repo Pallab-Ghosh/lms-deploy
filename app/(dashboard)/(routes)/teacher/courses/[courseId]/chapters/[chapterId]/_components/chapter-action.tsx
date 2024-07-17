@@ -16,10 +16,11 @@ type chapteractionprops={
     courseId:string,
     chapterId:string,
     isPublished:boolean
+    
 }
 
 
-export const ChapterAction=({disabled,courseId,chapterId,isPublished}:chapteractionprops)=>{
+export const ChapterAction=({disabled,courseId,chapterId,isPublished, }:chapteractionprops)=>{
 
     const[isLoading,setIsLoading]=useState(false)
     const router=useRouter()
@@ -30,7 +31,8 @@ export const ChapterAction=({disabled,courseId,chapterId,isPublished}:chapteract
             setIsLoading(true);
             axios.delete(`/api/course/${courseId}/chapters/${chapterId}`)
             toast.success('Chapter Deleted');
-            router.push(`/teacher/course/${courseId}`)
+            
+            router.push(`/teacher/courses/${courseId}`);
         }
          catch (error) {
             toast.error('Something went wrong')

@@ -81,8 +81,10 @@ export async function PATCH(req:Request,{params}:params_type)
         const {userId}=auth();
         const {courseid}=params;
         const values=await req.json();
+        console.log('userId',userId)
+        console.log('values',values)
 
-        if(!userId || isTeacher(userId)){
+        if(!userId || !isTeacher(userId)){
             return new NextResponse('Unauthorized',{status:401})
         }
 

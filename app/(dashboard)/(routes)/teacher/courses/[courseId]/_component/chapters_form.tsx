@@ -21,9 +21,10 @@ import ChapterList from './chapters-list'
  
 
 type ChapterFormProps={
-    initialData:Course & {chapters:Chapter[]}
+    initialData:Course & {
+      chapters:Chapter[]
+    }
     courseId:string
-    
 }
 
 
@@ -32,11 +33,22 @@ const formSchema=z.object({
 })
 
 
-const ChapterForm = ({initialData,courseId}:ChapterFormProps) => {
+const ChapterForm = ({initialData,courseId }:ChapterFormProps) => {
 const [isCreating,setIsCreating]=useState(false)
 const[isUpdating,setUpDating]=useState(false);
 
 const router=useRouter()
+
+const [chapters, setChapters] = useState(initialData.chapters)
+
+const handleChapterDeleted = (chapterId: string) => {
+    setChapters(chapters.filter(chapter => chapter.id !== chapterId))
+}
+
+useEffect(() => {
+    setChapters(initialData.chapters)
+}, [initialData.chapters])
+
 
 
 
@@ -56,10 +68,11 @@ const onSubmit=async(values:z.infer<typeof formSchema>)=>{
  // console.log(values)
 
       try {
-       await axios.post(`/api/course/${courseId}/chapters`,values)
+      const new_chapter :Chapter = await axios.post(`/api/course/${courseId}/chapters`,values)
         toast.success('Chapter Updated')
         toggleCreating()
-       
+        setChapters(prevChapters => [...prevChapters, new_chapter]) 
+        router.refresh()
       }
 
         catch (error) {
